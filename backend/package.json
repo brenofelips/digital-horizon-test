@@ -5,7 +5,10 @@
   "main": "src/index.js",
   "type": "module",
   "scripts": {
+    "lint:check": "prettier --check .",
+    "lint:fix": "prettier --write .",
     "test": "jest",
+    "test:watch": "jest --watch",
     "dev": "node --watch src/server.js"
   },
   "dependencies": {
@@ -17,7 +20,11 @@
     "mongoose": "^6.0.13"
   },
   "devDependencies": {
+    "@eslint/js": "^9.8.0",
+    "eslint": "^9.8.0",
+    "globals": "^15.8.0",
     "jest": "^27.0.6",
+    "prettier": "^3.3.3",
     "supertest": "^6.1.3"
   }
 }
