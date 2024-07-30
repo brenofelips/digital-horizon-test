@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -53,13 +53,12 @@ const LoginPage = () => {
           Login
         </button>
 
-        <button
-          type="button"
-          className="px-4 py-2 bg-blue-600 text-white rounded-md ml-1"
-          onClick={handleRegister}
+        <Link
+          to="/register"
+          className="px-4 py-2 text-blue-400 rounded-md ml-1"
         >
-          Register
-        </button>
+          I don't have a login
+        </Link>
       </form>
     </div>
   );

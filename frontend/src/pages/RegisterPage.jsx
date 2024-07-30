@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
@@ -62,6 +62,10 @@ const RegisterPage = () => {
         >
           Register
         </button>
+
+        <Link to="/" className="px-4 py-2 text-blue-400 rounded-md">
+          I already have a login
+        </Link>
       </form>
     </div>
   );
