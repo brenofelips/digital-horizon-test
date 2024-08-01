@@ -1,9 +1,13 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
@@ -22,6 +26,7 @@ const App = () => {
           />
         </Routes>
       </Router>
+      <ToastContainer />
     </AuthProvider>
   );
 };

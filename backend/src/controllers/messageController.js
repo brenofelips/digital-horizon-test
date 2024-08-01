@@ -45,7 +45,7 @@ export const deleteMessage = async (req, res) => {
 export const getAllMessages = async (req, res) => {
   try {
     const messages = await Message.find();
-    res.json(messages);
+    res.status(200).json(messages);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch messages" });
   }

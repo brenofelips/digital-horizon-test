@@ -1,6 +1,6 @@
 const MessageList = ({ messages, onDelete, onEdit }) => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 mt-6">
       {messages.map((message) => (
         <div
           key={message._id}

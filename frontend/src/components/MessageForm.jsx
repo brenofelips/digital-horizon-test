@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
-const MessageForm = ({ onSave }) => {
+const MessageForm = ({ onSave, setShowForm }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onSave({ title, description });
-    setTitle("");
-    setDescription("");
+    setTitle(title);
+    setDescription(description);
   };
 
   return (
@@ -39,6 +39,12 @@ const MessageForm = ({ onSave }) => {
         className="px-4 py-2 bg-blue-600 text-white rounded-md"
       >
         Save
+      </button>
+      <button
+        className="px-4 py-2 bg-red-600 text-white rounded-md ml-2"
+        onClick={() => setShowForm(false)}
+      >
+        Cancel
       </button>
     </form>
   );

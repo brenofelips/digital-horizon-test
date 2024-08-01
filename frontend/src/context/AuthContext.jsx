@@ -1,52 +1,57 @@
-import { createContext, useContext, useState } from "react";
-import axios from "axios";
+import { createContext, useContext, useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import api from "../api/api";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+
+  const isAuthenticated = () => {
+    const token = window.localStorage.getItem("token");
+    return !!token;
+  };
 
   const login = async (username, password) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3333/api/users/login",
-        {
-          username,
-          password,
-        }
-      );
-      setIsAuthenticated(true);
-      setUser(response.data.user);
-      localStorage.setItem("token", response.data.token);
+      const { data } = await api.post("/users/login", {
+        username,
+        password,
+      });
+      window.localStorage.setItem("token", data?.token);
     } catch (error) {
       console.error("Login failed:", error);
-      setIsAuthenticated(false);
     }
   };
 
   const register = async (username, email, password) => {
     try {
-      await axios.post("http://localhost:3333/api/users/register", {
+      const { data } = await api.post("/users/register", {
         username,
         email,
         password,
       });
-      await login(username, password);
+      setUser(data);
+      toast.success("User registered successfully");
     } catch (error) {
+      toast.error("User registered failed");
       console.error("Registration failed:", error);
     }
   };
 
   const logout = () => {
-    setIsAuthenticated(false);
-    setUser(null);
-    localStorage.removeItem("token");
+    window.localStorage.removeItem("token");
   };
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, login, register, logout, user }}
+      value={{
+        isAuthenticated,
+        login,
+        register,
+        logout,
+        user,
+      }}
     >
       {children}
     </AuthContext.Provider>
