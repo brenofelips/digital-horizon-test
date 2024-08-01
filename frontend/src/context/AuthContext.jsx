@@ -7,11 +7,6 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const isAuthenticated = () => {
-    const token = window.localStorage.getItem("token");
-    return !!token;
-  };
-
   const login = async (username, password) => {
     try {
       const { data } = await api.post("/users/login", {
@@ -40,13 +35,13 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    setUser(null);
     window.localStorage.removeItem("token");
   };
 
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated,
         login,
         register,
         logout,

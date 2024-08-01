@@ -1,5 +1,3 @@
-dotenv.config();
-
 import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
@@ -11,11 +9,13 @@ import userRoutes from "./routes/userRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 3333;
+dotenv.config();
 
 const corsOptions = {
   origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
+  credentilas: true,
 };
 
 app.use(bodyParser.json());
