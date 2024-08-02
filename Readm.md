@@ -29,4 +29,7 @@ docker-compose -d up # É necessário rodar esse comando antes do backend
 
 npm install
 npm run dev
+
+# Para rodar os testes
+npm run test
 ```
