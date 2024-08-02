@@ -78,4 +78,36 @@ describe('Message Controller', () => {
     expect(deletedMessage.statusCode).toBe(200)
     expect(deletedMessage.body.message).toBe("Message deleted")
   })
+
+  test("should valid if token is invalid", async () => {
+    const response = await request(app)
+      .post('/api/messages')
+      .send({ title: 'Test Title', description: 'Test Description', userId: idUser })
+      .set('Authorization', `${token} test`);
+
+    expect(response.body.error).toBe("Token is not valid")
+  })
 });
+
+describe("User Controller", () => {
+  test("should list user", async () => {
+    const user = await request(app).get('/api/users/all')
+    const usr = user.body.user.find(item => item.username === "userTest")
+
+    expect(usr.username).toBe("userTest")
+    expect(usr.email).toBe("userTest@gmail.com")
+  })
+
+  test("should login user", async () => {
+    const user = await request(app).get('/api/users/all')
+    const usr = user.body.user.find(item => item.username === "userTest")
+
+    expect(usr.username).toBe("userTest")
+    expect(usr.email).toBe("userTest@gmail.com")
+
+    const response = await request(app).post("/api/users/login").send({ username: usr.username, password: "admin1234" })
+    expect(response.body.token).toBeTruthy()
+  })
+})
+
+
