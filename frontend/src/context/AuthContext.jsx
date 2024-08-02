@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 
   const getUserByUserName = async (username) => {
     try {
-      const { data } = await api.get("/users/getIdUser");
+      const { data } = await api.get("/users/all");
       const user = data?.user?.find((usr) => usr?.username === username);
       window.localStorage.setItem("userID", user?._id);
     } catch (error) {
