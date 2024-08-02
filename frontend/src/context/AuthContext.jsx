@@ -13,8 +13,10 @@ export const AuthProvider = ({ children }) => {
         username,
         password,
       });
+      getUserByUserName(username);
       window.localStorage.setItem("token", data?.token);
     } catch (error) {
+      toast.error(error?.response?.data?.error);
       console.error("Login failed:", error);
     }
   };
@@ -34,9 +36,20 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const getUserByUserName = async (username) => {
+    try {
+      const { data } = await api.get("/users/getIdUser");
+      const user = data?.user?.find((usr) => usr?.username === username);
+      window.localStorage.setItem("userID", user?._id);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const logout = () => {
     setUser(null);
     window.localStorage.removeItem("token");
+    window.localStorage.removeItem("userID");
   };
 
   return (

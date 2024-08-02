@@ -13,6 +13,7 @@ const HomePage = () => {
   const token = window.localStorage.getItem("token");
   const { logout } = useAuth();
   const navigate = useNavigate();
+  const userId = window.localStorage.getItem("userID");
 
   useEffect(() => {
     async function fetchData() {
@@ -27,16 +28,18 @@ const HomePage = () => {
   }, []);
 
   const saveMessage = async (message) => {
+    const data = {
+      title: message?.title,
+      description: message?.description,
+      userId,
+    };
+
     if (editingMessage && editingMessage?._id) {
-      const response = await api.put(
-        `/messages/${editingMessage._id}`,
-        message,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const response = await api.put(`/messages/${editingMessage._id}`, data, {
+        headers: {
+          Authorization: token,
+        },
+      });
       const msgs = messages.map((msg) =>
         msg._id === editingMessage._id ? response.data : msg
       );
@@ -44,7 +47,7 @@ const HomePage = () => {
       setEditingMessage(null);
       setShowForm(false);
     } else {
-      const response = await api.post("/messages", message, {
+      const response = await api.post("/messages", data, {
         headers: {
           Authorization: token,
         },

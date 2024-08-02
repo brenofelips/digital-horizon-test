@@ -4,12 +4,17 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+export const getUser = async (req, res) => {
+  const user = await User.find()
+  return res.status(200).json({ user })
+}
+
 export const registerUser = async (req, res) => {
   const { username, email, password } = req.body;
   try {
     const newUser = new User({ username, email, password });
-    await newUser.save();
-    res.status(201).json({ message: "User registered successfully" });
+    const user = await newUser.save();
+    res.status(201).json({ user });
   } catch (error) {
     res.status(500).json({ error: "Failed to register user" });
   }

@@ -1,9 +1,9 @@
 import Message from "../models/MessageModal.js";
 
 export const createMessage = async (req, res) => {
-  const { title, description } = req.body;
+  const { title, description, userId } = req.body;
   try {
-    const newMessage = new Message({ title, description });
+    const newMessage = new Message({ title, description, user: userId });
     await newMessage.save();
     res.status(201).json(newMessage);
   } catch (error) {
