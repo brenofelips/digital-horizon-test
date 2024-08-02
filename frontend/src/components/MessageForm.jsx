@@ -1,8 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const MessageForm = ({ onSave, setShowForm }) => {
+const MessageForm = ({
+  onSave,
+  setShowForm,
+  messageEdit,
+  setEditingMessage,
+}) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if (messageEdit && messageEdit?._id) {
+      setTitle(messageEdit?.title);
+      setDescription(messageEdit?.description);
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -58,7 +70,7 @@ const MessageForm = ({ onSave, setShowForm }) => {
                 onChange={(e) => setDescription(e.target.value)}
                 required
                 autoComplete="description"
-                className="bg-bg-darking block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-bg-darking placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="bg-bg-darking block w-full rounded-md border-0 py-1.5 text-gray-500 shadow-sm ring-1 ring-inset ring-bg-darking placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
@@ -71,8 +83,12 @@ const MessageForm = ({ onSave, setShowForm }) => {
               Save
             </button>
             <button
+              type="reset"
               className="px-8 py-2 bg-bg-darking text-white rounded-md ml-2"
-              onClick={() => setShowForm(false)}
+              onClick={() => {
+                setShowForm(false);
+                setEditingMessage(null);
+              }}
             >
               Cancel
             </button>

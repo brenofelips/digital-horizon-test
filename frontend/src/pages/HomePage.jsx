@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaPowerOff, FaPlus } from "react-icons/fa";
+import { FaPowerOff } from "react-icons/fa";
 import MessageForm from "../components/MessageForm";
 import MessageList from "../components/MessageList";
 import { useAuth } from "../context/AuthContext";
@@ -76,7 +76,12 @@ const HomePage = () => {
   const showComponent = () => (
     <>
       {showForm ? (
-        <MessageForm onSave={saveMessage} setShowForm={setShowForm} />
+        <MessageForm
+          onSave={saveMessage}
+          setShowForm={setShowForm}
+          messageEdit={editingMessage}
+          setEditingMessage={setEditingMessage}
+        />
       ) : (
         <MessageList
           messages={messages}
